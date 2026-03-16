@@ -13,16 +13,16 @@ export default function Navbar() {
         left: 0,
         right: 0,
         zIndex: 50,
-        background: 'rgba(10, 10, 15, 0.85)',
-        backdropFilter: 'blur(16px)',
-        borderBottom: '1px solid rgba(30, 30, 46, 0.6)',
+        background: 'rgba(24, 23, 23, 0.88)',
+        backdropFilter: 'blur(18px)',
+        borderBottom: '1px solid #252323',
       }}
     >
       <div
         style={{
           maxWidth: '1200px',
           margin: '0 auto',
-          padding: '0 24px',
+          padding: '0 clamp(16px, 4vw, 32px)',
           height: '64px',
           display: 'flex',
           alignItems: 'center',
@@ -36,62 +36,149 @@ export default function Navbar() {
               width: '32px',
               height: '32px',
               borderRadius: '8px',
-              background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+              background: 'linear-gradient(135deg, #4b2bee, #7c5af0)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: '16px',
             }}
           >
-            ⚡
+            <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#fff', fontVariationSettings: "'FILL' 1" }}>electric_bolt</span>
           </div>
-          <span style={{ fontSize: '18px', fontWeight: 700, color: '#f1f5f9', letterSpacing: '-0.3px' }}>
+          <span style={{ fontSize: '17px', fontWeight: 700, color: '#f0eded', letterSpacing: '-0.3px' }}>
             FutureSelf
           </span>
         </Link>
 
-        {/* Desktop Nav */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }} className="hidden md:flex">
-          <a
-            href="#features"
-            style={{ color: '#9ca3af', fontSize: '14px', padding: '8px 16px', borderRadius: '8px', transition: 'color 0.2s', cursor: 'pointer' }}
-            onMouseEnter={(e) => ((e.target as HTMLElement).style.color = '#e2e8f0')}
-            onMouseLeave={(e) => ((e.target as HTMLElement).style.color = '#9ca3af')}
-          >
-            Features
-          </a>
-          <a
-            href="#how-it-works"
-            style={{ color: '#9ca3af', fontSize: '14px', padding: '8px 16px', borderRadius: '8px', transition: 'color 0.2s', cursor: 'pointer' }}
-            onMouseEnter={(e) => ((e.target as HTMLElement).style.color = '#e2e8f0')}
-            onMouseLeave={(e) => ((e.target as HTMLElement).style.color = '#9ca3af')}
-          >
-            How it Works
-          </a>
+        {/* Desktop Nav Links */}
+        <div
+          style={{ display: 'flex', alignItems: 'center', gap: '4px' }}
+          className="hidden md:flex"
+        >
+          {[
+            { label: 'The Problem', href: '#problem' },
+            { label: 'How it works', href: '#how-it-works' },
+            { label: 'Features', href: '#features' },
+            { label: 'Stories', href: '#social-proof' },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              style={{
+                color: '#9c9898',
+                fontSize: '14px',
+                padding: '8px 14px',
+                borderRadius: '8px',
+                transition: 'color 0.2s, background 0.2s',
+                cursor: 'pointer',
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLElement).style.color = '#f0eded';
+                (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.05)';
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLElement).style.color = '#9c9898';
+                (e.currentTarget as HTMLElement).style.background = 'transparent';
+              }}
+            >
+              {link.label}
+            </a>
+          ))}
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        {/* CTA Buttons */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <Link
             href="/login"
-            style={{
-              color: '#9ca3af',
-              fontSize: '14px',
-              fontWeight: 500,
-              padding: '8px 16px',
-              borderRadius: '8px',
-              transition: 'color 0.2s',
-              textDecoration: 'none',
-            }}
+            style={{ color: '#9c9898', fontSize: '14px', fontWeight: 500, padding: '8px 14px', borderRadius: '8px', transition: 'color 0.2s', textDecoration: 'none' }}
+            onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = '#f0eded')}
+            onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = '#9c9898')}
           >
             Login
           </Link>
           <Link href="/register">
-            <button className="btn-primary" style={{ padding: '9px 20px', fontSize: '14px' }}>
+            <button className="btn-primary" style={{ padding: '9px 18px', fontSize: '14px' }}>
+              Get Started →
+            </button>
+          </Link>
+
+          {/* Mobile hamburger */}
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="mobile-nav"
+            style={{
+              background: 'transparent',
+              border: '1px solid #2c2a2a',
+              borderRadius: '8px',
+              color: '#9c9898',
+              cursor: 'pointer',
+              padding: '8px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            aria-label="Toggle menu"
+          >
+            <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>
+              {menuOpen ? 'close' : 'menu'}
+            </span>
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile dropdown */}
+      {menuOpen && (
+        <div
+          className="mobile-nav"
+          style={{
+            background: '#111010',
+            borderTop: '1px solid #252323',
+            padding: '16px clamp(16px, 4vw, 32px)',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '4px',
+          }}
+        >
+          {[
+            { label: 'The Problem', href: '#problem' },
+            { label: 'How it works', href: '#how-it-works' },
+            { label: 'Features', href: '#features' },
+            { label: 'Stories', href: '#social-proof' },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={() => setMenuOpen(false)}
+              style={{
+                color: '#9c9898',
+                fontSize: '15px',
+                padding: '12px 16px',
+                borderRadius: '8px',
+                display: 'block',
+                transition: 'background 0.2s, color 0.2s',
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLElement).style.background = 'rgba(75,43,238,0.08)';
+                (e.currentTarget as HTMLElement).style.color = '#f0eded';
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLElement).style.background = 'transparent';
+                (e.currentTarget as HTMLElement).style.color = '#9c9898';
+              }}
+            >
+              {link.label}
+            </a>
+          ))}
+          <div style={{ height: '1px', background: '#252323', margin: '8px 0' }} />
+          <Link href="/login" style={{ color: '#9c9898', fontSize: '15px', padding: '12px 16px', borderRadius: '8px' }} onClick={() => setMenuOpen(false)}>
+            Login
+          </Link>
+          <Link href="/register" onClick={() => setMenuOpen(false)}>
+            <button className="btn-primary" style={{ width: '100%', justifyContent: 'center', marginTop: '4px' }}>
               Get Started →
             </button>
           </Link>
         </div>
-      </div>
+      )}
     </nav>
   );
 }

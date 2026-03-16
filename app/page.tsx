@@ -1,169 +1,200 @@
 'use client';
-import Navbar from "@/components/Navbar";
-import Link from "next/link";
+import Navbar from '@/components/Navbar';
+import Link from 'next/link';
 
 const problems = [
   {
-    icon: "🧠",
-    title: "Mental Load",
-    desc: "Your brain is not designed to hold context across weeks or months. Important thoughts fade before you can act on them.",
+    icon: 'psychology',
+    title: 'The Mental Load',
+    desc: 'Trying to remember everything leads to anxiety and mental fatigue. You\'re using processing power just to hold onto data.',
   },
   {
-    icon: "🔗",
-    title: "Broken Context",
-    desc: "A generic calendar alert never tells you why something mattered. You forget the reason before you even open the note.",
+    icon: 'link_off',
+    title: 'Broken Context',
+    desc: 'Reminders pop up at the wrong time or place. Seeing "Buy Milk" during deep work is useless noise.',
   },
   {
-    icon: "📣",
-    title: "Digital Noise",
-    desc: "Notifications are everywhere. Your important reminders get buried under the noise of the unimportant.",
+    icon: 'notifications_off',
+    title: 'Digital Noise',
+    desc: 'Important tasks get lost in a sea of unimportant notifications from social media, news, and spam.',
   },
 ];
 
 const steps = [
-  { step: "01", icon: "✍️", title: "Write", desc: "Capture what matters now — a decision, a goal, a reflection — in plain words to your future self." },
-  { step: "02", icon: "📅", title: "Choose", desc: "Set a date and importance level. Days, weeks, or months — you decide when your future self needs to hear it." },
-  { step: "03", icon: "💌", title: "Nudge", desc: "At the right time, FutureSelf sends a personalized AI-crafted email that restores the context you set." },
+  { step: '01', icon: 'edit', title: 'Write', desc: 'Jot down a thought instantly. Natural language processing understands "Remind me to buy milk tomorrow".' },
+  { step: '02', icon: 'tune', title: 'Choose', desc: 'Set the context — is it a time, a location, or when you open a specific app? You define the trigger.' },
+  { step: '03', icon: 'notifications_active', title: 'Nudge', desc: 'Receive a gentle, inescapable nudge exactly when it\'s relevant. Close the loop and free your mind.' },
 ];
 
 const features = [
-  { icon: "🎯", title: "Contextual Reminders", desc: "Unlike calendars, FutureSelf preserves the context of why something mattered." },
-  { icon: "🤖", title: "AI-Powered Nudges", desc: "Gemini generates a warm, personalized message tailored to your note and timeframe." },
-  { icon: "📊", title: "Timeline View", desc: "See your past and future reminders in one beautiful, organized timeline." },
-  { icon: "📈", title: "Analytics", desc: "Track your completion rate, streaks, and patterns over time to grow intentionally." },
+  { icon: 'my_location', title: 'Contextual Reminders', desc: 'Triggers based on where you are, not just when. "Remind me to pick up dry cleaning when I leave the office."' },
+  { icon: 'devices', title: 'Multi-platform', desc: 'Seamless sync across all your devices.' },
+  { icon: 'loop', title: 'Habit Loops', desc: 'Recurring reminders that adapt to your completion streaks.' },
+  { icon: 'mic', title: 'Voice Capture', desc: 'Capture thoughts on the go with high-fidelity voice-to-text.' },
 ];
 
 const testimonials = [
-  { name: "Priya S.", role: "Product Designer", quote: "FutureSelf helped me actually follow through on career goals I kept forgetting. The AI nudge felt uncannily personal." },
-  { name: "Arjun M.", role: "Software Engineer", quote: "I set a reminder about a side project idea 3 months ago. When it arrived, I remembered exactly why it mattered. Shipped it last week." },
-  { name: "Leila K.", role: "Founder", quote: "Finally a reminder tool that doesn't treat context like an afterthought. My future self thanks my past self every week." },
+  { name: 'Priya S.', role: 'Product Designer', quote: 'FutureSelf helped me actually follow through on career goals I kept forgetting. The AI nudge felt uncannily personal.' },
+  { name: 'Arjun M.', role: 'Software Engineer', quote: 'I set a reminder about a side project 3 months ago. When it arrived, I remembered exactly why it mattered. Shipped it last week.' },
+  { name: 'Leila K.', role: 'Founder', quote: 'Finally a reminder tool that doesn\'t treat context like an afterthought. My future self thanks my past self every week.' },
 ];
 
 export default function LandingPage() {
   return (
-    <div style={{ background: "#0a0a0f", minHeight: "100vh", color: "#e2e8f0" }}>
+    <div style={{ background: '#181717', minHeight: '100vh', color: '#f0eded' }}>
       <Navbar />
 
-      {/* Hero */}
+      {/* ── Hero ── */}
       <section
         style={{
-          minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          textAlign: "center",
-          padding: "100px 24px 60px",
-          position: "relative",
-          overflow: "hidden",
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          textAlign: 'center',
+          padding: 'clamp(100px, 14vw, 180px) clamp(16px, 5vw, 48px) clamp(60px, 8vw, 100px)',
+          position: 'relative',
+          overflow: 'hidden',
         }}
       >
-        {/* Background glow */}
-        <div style={{ position: "absolute", top: "20%", left: "50%", transform: "translateX(-50%)", width: "600px", height: "600px", background: "radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
+        {/* Glow orbs */}
+        <div style={{ position: 'absolute', top: '15%', left: '50%', transform: 'translateX(-50%)', width: 'min(700px, 90vw)', height: 'min(700px, 90vw)', background: 'radial-gradient(circle, rgba(75,43,238,0.1) 0%, transparent 65%)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', bottom: '10%', right: '10%', width: '300px', height: '300px', background: 'radial-gradient(circle, rgba(124,90,240,0.07) 0%, transparent 70%)', pointerEvents: 'none' }} />
 
-        <div style={{ maxWidth: "780px", zIndex: 1, animation: "fadeIn 0.8s ease-in-out" }}>
-          <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "rgba(99,102,241,0.1)", border: "1px solid rgba(99,102,241,0.3)", borderRadius: "20px", padding: "6px 16px", marginBottom: "28px" }}>
-            <span style={{ fontSize: "12px", color: "#a5b4fc", fontWeight: 600 }}>✦ AI-Powered Reminder System</span>
+        <div style={{ maxWidth: '820px', zIndex: 1, animation: 'fadeInUp 0.8s ease-out both' }}>
+          {/* Badge */}
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(75,43,238,0.1)', border: '1px solid rgba(75,43,238,0.28)', borderRadius: '20px', padding: '6px 16px', marginBottom: '32px' }}>
+            <span className="material-symbols-outlined" style={{ fontSize: '14px', color: '#a78bfa', fontVariationSettings: "'FILL' 1" }}>auto_awesome</span>
+            <span style={{ fontSize: '12px', color: '#a78bfa', fontWeight: 600 }}>AI-Powered Reminder System</span>
           </div>
 
-          <h1 style={{ fontSize: "clamp(42px, 7vw, 80px)", fontWeight: 800, lineHeight: 1.1, letterSpacing: "-0.03em", margin: "0 0 24px", color: "#f1f5f9" }}>
-            Don&apos;t let important things{" "}
-            <span style={{ background: "linear-gradient(135deg, #6366f1, #a78bfa, #c084fc)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-              quietly disappear
+          <h1 style={{ fontSize: 'clamp(38px, 6.5vw, 80px)', fontWeight: 800, lineHeight: 1.05, letterSpacing: '-0.04em', margin: '0 0 24px', color: '#f0eded' }}>
+            Don&apos;t let important things{' '}
+            <span style={{ background: 'linear-gradient(135deg, #7c5af0, #a78bfa, #c4b5fd)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+              quietly disappear.
             </span>
           </h1>
 
-          <p style={{ fontSize: "18px", color: "#9ca3af", lineHeight: 1.7, margin: "0 0 40px", maxWidth: "580px", marginLeft: "auto", marginRight: "auto" }}>
-            Write a message to your future self today. FutureSelf delivers it when the moment comes — with personalized AI context that makes you actually remember why it mattered.
+          <p style={{ fontSize: 'clamp(15px, 2vw, 18px)', color: '#7a7676', lineHeight: 1.75, margin: '0 0 44px', maxWidth: '580px', marginLeft: 'auto', marginRight: 'auto' }}>
+            The reminder system for your future self. Simple, contextual, and impossible to ignore when it matters most.
           </p>
 
-          <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
+          <div style={{ display: 'flex', gap: '14px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link href="/register">
-              <button className="btn-primary" style={{ fontSize: "16px", padding: "14px 32px" }}>
-                Get Started Free →
+              <button className="btn-primary" style={{ fontSize: '15px', padding: '14px 32px' }}>
+                Start for Free →
               </button>
             </Link>
             <a href="#how-it-works">
-              <button className="btn-secondary" style={{ fontSize: "16px", padding: "14px 32px" }}>
+              <button className="btn-secondary" style={{ fontSize: '15px', padding: '14px 32px' }}>
                 See How it Works
               </button>
             </a>
           </div>
 
-          <p style={{ color: "#4b5563", fontSize: "12px", marginTop: "24px" }}>No credit card required · Free to start</p>
+          <p style={{ color: '#4a4848', fontSize: '12px', marginTop: '20px' }}>14-day free trial · No credit card required</p>
         </div>
       </section>
 
-      {/* Problem */}
-      <section style={{ padding: "80px 24px", maxWidth: "1100px", margin: "0 auto" }}>
-        <div style={{ textAlign: "center", marginBottom: "56px" }}>
-          <h2 style={{ fontSize: "36px", fontWeight: 800, margin: "0 0 12px" }}>Why calendars keep failing you</h2>
-          <p style={{ color: "#6b7280", fontSize: "16px", margin: 0 }}>The tools you use were built for scheduling, not remembering what matters.</p>
-        </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px" }}>
-          {problems.map((p) => (
-            <div key={p.title} className="glass-card" style={{ padding: "32px" }}>
-              <div style={{ fontSize: "36px", marginBottom: "16px" }}>{p.icon}</div>
-              <h3 style={{ fontSize: "18px", fontWeight: 700, margin: "0 0 10px" }}>{p.title}</h3>
-              <p style={{ color: "#6b7280", fontSize: "14px", lineHeight: 1.7, margin: 0 }}>{p.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* How it works */}
-      <section id="how-it-works" style={{ padding: "80px 24px", background: "rgba(99,102,241,0.03)", borderTop: "1px solid #1e1e2e", borderBottom: "1px solid #1e1e2e" }}>
-        <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: "56px" }}>
-            <h2 style={{ fontSize: "36px", fontWeight: 800, margin: "0 0 12px" }}>How it works</h2>
-            <p style={{ color: "#6b7280", fontSize: "16px", margin: 0 }}>Simple, powerful, and personal.</p>
+      {/* ── Problem ── */}
+      <section id="problem" style={{ padding: 'clamp(60px, 8vw, 100px) clamp(16px, 5vw, 48px)', borderTop: '1px solid #252323' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '56px' }}>
+            <p style={{ color: '#a78bfa', fontSize: '12px', fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase', margin: '0 0 12px' }}>The Problem</p>
+            <h2 style={{ fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: 800, margin: '0 0 12px', letterSpacing: '-0.03em' }}>Why traditional reminders fail</h2>
+            <p style={{ color: '#7a7676', fontSize: '16px', margin: 0 }}>Your brain isn&apos;t designed to hold onto everything.</p>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "32px" }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
+            {problems.map((p) => (
+              <div
+                key={p.title}
+                style={{
+                  background: '#1e1d1d',
+                  border: '1px solid #2c2a2a',
+                  borderRadius: '16px',
+                  padding: '28px',
+                  transition: 'border-color 0.2s, transform 0.2s',
+                }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(75,43,238,0.3)'; (e.currentTarget as HTMLElement).style.transform = 'translateY(-3px)'; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = '#2c2a2a'; (e.currentTarget as HTMLElement).style.transform = 'translateY(0)'; }}
+              >
+                <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'rgba(75,43,238,0.1)', border: '1px solid rgba(75,43,238,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '18px' }}>
+                  <span className="material-symbols-outlined" style={{ color: '#a78bfa', fontVariationSettings: "'FILL' 0" }}>{p.icon}</span>
+                </div>
+                <h3 style={{ fontSize: '16px', fontWeight: 700, margin: '0 0 8px', color: '#f0eded' }}>{p.title}</h3>
+                <p style={{ color: '#7a7676', fontSize: '14px', lineHeight: 1.7, margin: 0 }}>{p.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── How it works ── */}
+      <section id="how-it-works" style={{ padding: 'clamp(60px, 8vw, 100px) clamp(16px, 5vw, 48px)', background: 'rgba(75,43,238,0.03)', borderTop: '1px solid #252323', borderBottom: '1px solid #252323' }}>
+        <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '56px' }}>
+            <p style={{ color: '#a78bfa', fontSize: '12px', fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase', margin: '0 0 12px' }}>How it works</p>
+            <h2 style={{ fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: 800, margin: '0 0 12px', letterSpacing: '-0.03em' }}>Offload your brain in 3 steps</h2>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '32px' }}>
             {steps.map((s) => (
-              <div key={s.step} style={{ textAlign: "center" }}>
-                <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "64px", height: "64px", borderRadius: "16px", background: "rgba(99,102,241,0.12)", border: "1px solid rgba(99,102,241,0.25)", marginBottom: "20px", fontSize: "28px" }}>
-                  {s.icon}
+              <div key={s.step} style={{ textAlign: 'center' }}>
+                <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '64px', height: '64px', borderRadius: '16px', background: 'rgba(75,43,238,0.12)', border: '1px solid rgba(75,43,238,0.22)', marginBottom: '20px' }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: '28px', color: '#a78bfa', fontVariationSettings: "'FILL' 0" }}>{s.icon}</span>
                 </div>
-                <div style={{ color: "#6366f1", fontSize: "12px", fontWeight: 700, letterSpacing: "1px", marginBottom: "8px" }}>STEP {s.step}</div>
-                <h3 style={{ fontSize: "20px", fontWeight: 700, margin: "0 0 10px" }}>{s.title}</h3>
-                <p style={{ color: "#6b7280", fontSize: "14px", lineHeight: 1.7, margin: 0 }}>{s.desc}</p>
+                <div style={{ color: '#a78bfa', fontSize: '11px', fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '8px' }}>STEP {s.step}</div>
+                <h3 style={{ fontSize: '20px', fontWeight: 700, margin: '0 0 10px' }}>{s.title}</h3>
+                <p style={{ color: '#7a7676', fontSize: '14px', lineHeight: 1.7, margin: 0 }}>{s.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Features */}
-      <section id="features" style={{ padding: "80px 24px", maxWidth: "1100px", margin: "0 auto" }}>
-        <div style={{ textAlign: "center", marginBottom: "56px" }}>
-          <h2 style={{ fontSize: "36px", fontWeight: 800, margin: "0 0 12px" }}>Everything you need to remember what matters</h2>
-        </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "24px" }}>
-          {features.map((f) => (
-            <div key={f.title} className="glass-card" style={{ padding: "28px" }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(99,102,241,0.3)'; }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(30,30,46,0.8)'; }}
-            >
-              <div style={{ fontSize: "30px", marginBottom: "14px" }}>{f.icon}</div>
-              <h3 style={{ fontSize: "16px", fontWeight: 700, margin: "0 0 8px" }}>{f.title}</h3>
-              <p style={{ color: "#6b7280", fontSize: "13px", lineHeight: 1.6, margin: 0 }}>{f.desc}</p>
-            </div>
-          ))}
+      {/* ── Features ── */}
+      <section id="features" style={{ padding: 'clamp(60px, 8vw, 100px) clamp(16px, 5vw, 48px)' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '56px' }}>
+            <p style={{ color: '#a78bfa', fontSize: '12px', fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase', margin: '0 0 12px' }}>Features</p>
+            <h2 style={{ fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: 800, margin: 0, letterSpacing: '-0.03em' }}>Everything you need to focus</h2>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px' }}>
+            {features.map((f) => (
+              <div
+                key={f.title}
+                style={{ background: '#1e1d1d', border: '1px solid #2c2a2a', borderRadius: '14px', padding: '24px', transition: 'border-color 0.2s, transform 0.2s' }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(75,43,238,0.3)'; (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = '#2c2a2a'; (e.currentTarget as HTMLElement).style.transform = 'translateY(0)'; }}
+              >
+                <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(75,43,238,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '14px' }}>
+                  <span className="material-symbols-outlined" style={{ color: '#a78bfa', fontSize: '20px', fontVariationSettings: "'FILL' 0" }}>{f.icon}</span>
+                </div>
+                <h3 style={{ fontSize: '15px', fontWeight: 700, margin: '0 0 6px', color: '#f0eded' }}>{f.title}</h3>
+                <p style={{ color: '#7a7676', fontSize: '13px', lineHeight: 1.65, margin: 0 }}>{f.desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section style={{ padding: "80px 24px", background: "rgba(99,102,241,0.03)", borderTop: "1px solid #1e1e2e", borderBottom: "1px solid #1e1e2e" }}>
-        <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: "56px" }}>
-            <h2 style={{ fontSize: "36px", fontWeight: 800, margin: "0 0 12px" }}>What people are saying</h2>
+      {/* ── Testimonials ── */}
+      <section id="social-proof" style={{ padding: 'clamp(60px, 8vw, 100px) clamp(16px, 5vw, 48px)', background: 'rgba(75,43,238,0.03)', borderTop: '1px solid #252323', borderBottom: '1px solid #252323' }}>
+        <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+            <h2 style={{ fontSize: 'clamp(24px, 3.5vw, 40px)', fontWeight: 800, margin: '0', letterSpacing: '-0.03em' }}>Who is this for?</h2>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px" }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px', marginTop: '40px' }}>
             {testimonials.map((t) => (
-              <div key={t.name} className="glass-card" style={{ padding: "28px" }}>
-                <p style={{ color: "#d1d5db", fontSize: "15px", lineHeight: 1.7, margin: "0 0 20px", fontStyle: "italic" }}>&ldquo;{t.quote}&rdquo;</p>
+              <div key={t.name} style={{ background: '#1e1d1d', border: '1px solid #2c2a2a', borderRadius: '16px', padding: '24px' }}>
+                <div style={{ display: 'flex', gap: '4px', marginBottom: '14px' }}>
+                  {[...Array(5)].map((_, i) => (
+                    <span key={i} className="material-symbols-outlined" style={{ fontSize: '16px', color: '#f59e0b', fontVariationSettings: "'FILL' 1" }}>star</span>
+                  ))}
+                </div>
+                <p style={{ color: '#b8b4b4', fontSize: '14px', lineHeight: 1.75, margin: '0 0 18px', fontStyle: 'italic' }}>&ldquo;{t.quote}&rdquo;</p>
                 <div>
-                  <p style={{ color: "#e2e8f0", fontSize: "14px", fontWeight: 600, margin: "0 0 2px" }}>{t.name}</p>
-                  <p style={{ color: "#6b7280", fontSize: "12px", margin: 0 }}>{t.role}</p>
+                  <p style={{ color: '#f0eded', fontSize: '14px', fontWeight: 600, margin: '0 0 2px' }}>{t.name}</p>
+                  <p style={{ color: '#7a7676', fontSize: '12px', margin: 0 }}>{t.role}</p>
                 </div>
               </div>
             ))}
@@ -171,25 +202,46 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section style={{ padding: "100px 24px", textAlign: "center" }}>
-        <h2 style={{ fontSize: "48px", fontWeight: 800, margin: "0 0 16px", letterSpacing: "-0.03em" }}>Your future self is waiting.</h2>
-        <p style={{ color: "#6b7280", fontSize: "18px", margin: "0 0 40px" }}>Start writing notes that actually make it through time.</p>
-        <Link href="/register">
-          <button className="btn-primary" style={{ fontSize: "16px", padding: "16px 40px" }}>
-            Create Your First Reminder →
-          </button>
-        </Link>
+      {/* ── CTA ── */}
+      <section style={{ padding: 'clamp(80px, 10vw, 120px) clamp(16px, 5vw, 48px)', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '500px', height: '500px', background: 'radial-gradient(circle, rgba(75,43,238,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <h2 style={{ fontSize: 'clamp(32px, 5vw, 58px)', fontWeight: 800, margin: '0 0 16px', letterSpacing: '-0.04em' }}>
+            Your future self will{' '}
+            <span style={{ background: 'linear-gradient(135deg, #7c5af0, #c4b5fd)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+              thank you.
+            </span>
+          </h2>
+          <p style={{ color: '#7a7676', fontSize: 'clamp(15px, 2vw, 18px)', margin: '0 0 40px' }}>
+            Join thousands of focused individuals who have stopped forgetting and started doing.
+          </p>
+          <Link href="/register">
+            <button className="btn-primary" style={{ fontSize: '16px', padding: '16px 40px' }}>
+              Create Your First Reminder →
+            </button>
+          </Link>
+          <p style={{ color: '#4a4848', fontSize: '12px', marginTop: '20px' }}>14-day free trial. No credit card required.</p>
+        </div>
       </section>
 
-      {/* Footer */}
-      <footer style={{ borderTop: "1px solid #1e1e2e", padding: "32px 24px", textAlign: "center" }}>
-        <p style={{ color: "#4b5563", fontSize: "13px", margin: 0 }}>
-          © 2025 FutureSelf · Built with care ·{" "}
-          <Link href="/login" style={{ color: "#6366f1", textDecoration: "none" }}>Login</Link>
-          {" · "}
-          <Link href="/register" style={{ color: "#6366f1", textDecoration: "none" }}>Sign Up</Link>
-        </p>
+      {/* ── Footer ── */}
+      <footer style={{ borderTop: '1px solid #252323', padding: '28px clamp(16px, 5vw, 48px)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div style={{ width: '22px', height: '22px', borderRadius: '6px', background: 'linear-gradient(135deg, #4b2bee, #7c5af0)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <span className="material-symbols-outlined" style={{ fontSize: '13px', color: '#fff', fontVariationSettings: "'FILL' 1" }}>electric_bolt</span>
+          </div>
+          <span style={{ color: '#4a4848', fontSize: '12px' }}>FutureSelf © 2025 · Mindful Tech Group</span>
+        </div>
+        <div style={{ display: 'flex', gap: '16px' }}>
+          {['Privacy', 'Terms', 'Twitter'].map((l) => (
+            <a key={l} href="#" style={{ color: '#4a4848', fontSize: '12px', transition: 'color 0.2s' }}
+              onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = '#9c9898')}
+              onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = '#4a4848')}
+            >{l}</a>
+          ))}
+          <Link href="/login" style={{ color: '#4a4848', fontSize: '12px' }}>Login</Link>
+          <Link href="/register" style={{ color: '#4a4848', fontSize: '12px' }}>Sign Up</Link>
+        </div>
       </footer>
     </div>
   );
