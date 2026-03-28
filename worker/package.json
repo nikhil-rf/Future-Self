@@ -1,0 +1,22 @@
+{
+  "name": "futureself-worker",
+  "version": "1.0.0",
+  "description": "Background worker for FutureSelf \u2014 polls MongoDB, calls Gemini, sends emails via Resend",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "date-fns": "^3.6.0",
+    "dotenv": "^16.4.5",
+    "mongoose": "^8.4.0",
+    "node-cron": "^3.0.3",
+    "resend": "^3.3.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -112,7 +112,7 @@ export default function LandingPage() {
                   background: '#1e1d1d',
                   border: '1px solid #2c2a2a',
                   borderRadius: '16px',
-                  padding: '28px',
+                  padding: '28px', 
                   transition: 'border-color 0.2s, transform 0.2s',
                 }}
                 onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(75,43,238,0.3)'; (e.currentTarget as HTMLElement).style.transform = 'translateY(-3px)'; }}
