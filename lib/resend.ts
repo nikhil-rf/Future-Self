@@ -9,6 +9,7 @@ interface SendReminderEmailParams {
   note: string;
   nudgeMessage: string;
   reminderId: string;
+  sequenceLabel?: string;
 }
 
 export async function sendReminderEmail({
@@ -17,10 +18,14 @@ export async function sendReminderEmail({
   note,
   nudgeMessage,
   reminderId,
+  sequenceLabel,
 }: SendReminderEmailParams) {
   const doneUrl = `${BASE_URL}/api/reminder/done?id=${reminderId}`;
   const snoozeUrl = `${BASE_URL}/api/reminder/snooze?id=${reminderId}`;
   const firstName = name.split(' ')[0];
+  const seqLine = sequenceLabel
+    ? `<p style="color:#818cf8;font-size:12px;margin:0 0 16px;font-weight:600;">${sequenceLabel}</p>`
+    : '';
 
   const html = `
 <!DOCTYPE html>
@@ -39,6 +44,7 @@ export async function sendReminderEmail({
     
     <div style="background:#111118;border:1px solid #1e1e2e;border-radius:16px;padding:32px;margin-bottom:24px;">
       <p style="color:#e2e8f0;font-size:18px;font-weight:600;margin:0 0 8px;">Hey ${firstName}, your future self is calling 👋</p>
+      ${seqLine}
       <p style="color:#9ca3af;font-size:14px;margin:0 0 24px;">Here's what you wanted to remember:</p>
       
       <div style="background:#1a1a2e;border-left:4px solid #6366f1;border-radius:8px;padding:20px;margin-bottom:24px;">
@@ -64,10 +70,17 @@ export async function sendReminderEmail({
 </body>
 </html>`;
 
-  return resend.emails.send({
+  const subjectSuffix = sequenceLabel ? ` (${sequenceLabel})` : '';
+  const { data, error } = await resend.emails.send({
     from: 'FutureSelf <onboarding@resend.dev>',
     to,
-    subject: `Hey ${firstName}, your future self is calling 👋`,
+    subject: `Hey ${firstName}, your future self is calling 👋${subjectSuffix}`,
     html,
   });
+
+  if (error) {
+    throw new Error(`Resend: ${error.message}`);
+  }
+
+  return data;
 }

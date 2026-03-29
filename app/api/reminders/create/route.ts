@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import dbConnect from '@/lib/mongodb';
 import Reminder from '@/models/Reminder';
+import { buildReminderSchedule } from '@/lib/reminderSchedule';
 
 export async function POST(req: NextRequest) {
   try {
@@ -20,13 +21,19 @@ export async function POST(req: NextRequest) {
     await dbConnect();
 
     const userId = (session.user as { id?: string }).id;
+    const createdAt = new Date();
+    const reminderDateObj = new Date(reminderDate);
+    const schedule = buildReminderSchedule(createdAt, reminderDateObj);
+
     const reminder = await Reminder.create({
       userId,
       note: note.trim(),
-      reminderDate: new Date(reminderDate),
+      reminderDate: reminderDateObj,
       importance: importance || 'Medium',
       email,
       status: 'pending',
+      createdAt,
+      schedule,
     });
 
     return NextResponse.json({ success: true, reminder }, { status: 201 });

@@ -16,6 +16,12 @@ const ReminderSchema = new Schema({
   // Status lifecycle:  pending → processing → delivered | failed
   status:        { type: String, enum: ['pending', 'processing', 'delivered', 'archived', 'failed'], default: 'pending' },
 
+  schedule:      [{
+    sendAt: { type: Date, required: true },
+    status: { type: String, enum: ['pending', 'sent'], default: 'pending' },
+    sentAt: { type: Date },
+  }],
+
   nudgeMessage:  { type: String },
   createdAt:     { type: Date, default: Date.now },
   deliveredAt:   { type: Date },

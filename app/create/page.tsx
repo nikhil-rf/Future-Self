@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Sidebar from '@/components/Sidebar';
 import toast from 'react-hot-toast';
+import { localDatetimeInputToUtcIso } from '@/lib/datetime';
 
 export default function CreatePage() {
   const { data: session, status } = useSession();
@@ -25,12 +26,19 @@ export default function CreatePage() {
     e.preventDefault();
     if (!form.note.trim()) { toast.error('Please write a note'); return; }
     if (!form.reminderDate) { toast.error('Please select a reminder date'); return; }
+    let reminderDateUtc: string;
+    try {
+      reminderDateUtc = localDatetimeInputToUtcIso(form.reminderDate);
+    } catch {
+      toast.error('Invalid date and time');
+      return;
+    }
     setLoading(true);
     try {
       const res = await fetch('/api/reminders/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, reminderDate: reminderDateUtc }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
@@ -77,7 +85,7 @@ export default function CreatePage() {
               Create a Future Reminder
             </h1>
             <p style={{ color: '#7a7676', fontSize: '14px', margin: 0 }}>
-              Write something to your future self. We&apos;ll deliver it at the right time.
+              Write something to your future self. We&apos;ll email AI nudges on a schedule leading up to your chosen time.
             </p>
           </div>
 
@@ -159,9 +167,10 @@ export default function CreatePage() {
             >
               <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#a78bfa', flexShrink: 0, marginTop: '1px', fontVariationSettings: "'FILL' 0" }}>auto_awesome</span>
               <p style={{ color: '#9c9898', fontSize: '13px', lineHeight: 1.65, margin: 0 }}>
-                A personalized AI nudge will be emailed to{' '}
-                <span style={{ color: '#c4b5fd', fontWeight: 600 }}>{form.email || 'your email'}</span>{' '}
-                {formattedDate ? `on ${formattedDate}` : 'on your chosen date'}.
+                Gemini writes a personalized nudge for each email. We send several nudges between now and your
+                deadline (more for longer timelines), with a final message at the time you chose. Delivered to{' '}
+                <span style={{ color: '#c4b5fd', fontWeight: 600 }}>{form.email || 'your email'}</span>
+                {formattedDate ? `, ending ${formattedDate}.` : '.'}
               </p>
             </div>
 

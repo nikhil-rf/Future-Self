@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongodb';
 import Reminder from '@/models/Reminder';
+import { buildReminderSchedule, type ScheduleSlot } from '@/lib/reminderSchedule';
 
 export async function GET(req: NextRequest) {
   try {
@@ -18,11 +19,39 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'Reminder not found' }, { status: 404 });
     }
 
-    const newDate = new Date(reminder.reminderDate);
-    newDate.setDate(newDate.getDate() + 7);
+    const delta = 7 * 24 * 60 * 60 * 1000;
+    const newDate = new Date(reminder.reminderDate.getTime() + delta);
+
+    const schedule = Array.isArray(reminder.schedule) ? reminder.schedule : [];
+    const hasSchedule = schedule.length > 0;
+    const allSent = hasSchedule && schedule.every((s: ScheduleSlot) => s.status === 'sent');
+
+    let newSchedule;
+    if (!hasSchedule || allSent) {
+      newSchedule = buildReminderSchedule(new Date(), newDate);
+    } else {
+      newSchedule = schedule.map((slot: ScheduleSlot) => {
+        if (slot.status === 'sent') return slot;
+        return {
+          sendAt: new Date(new Date(slot.sendAt).getTime() + delta),
+          status: slot.status,
+        };
+      });
+      const lastIdx = newSchedule.length - 1;
+      if (newSchedule[lastIdx].status !== 'sent') {
+        newSchedule[lastIdx] = {
+          ...newSchedule[lastIdx],
+          sendAt: newDate,
+        };
+      }
+    }
 
     await Reminder.findByIdAndUpdate(id, {
-      $set: { reminderDate: newDate, status: 'pending' },
+      $set: {
+        reminderDate: newDate,
+        schedule: newSchedule,
+        status: 'pending',
+      },
     });
 
     return new NextResponse(

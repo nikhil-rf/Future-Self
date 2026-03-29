@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import dbConnect from '@/lib/mongodb';
 import Reminder from '@/models/Reminder';
+import { buildReminderSchedule } from '@/lib/reminderSchedule';
 
 export async function PUT(req: NextRequest) {
   try {
@@ -19,9 +20,24 @@ export async function PUT(req: NextRequest) {
     await dbConnect();
 
     const userId = (session.user as { id?: string }).id;
+
+    let payload: Record<string, unknown> = { ...updates };
+    if (updates.reminderDate != null) {
+      const existing = await Reminder.findOne({ _id: id, userId }).lean();
+      if (!existing || Array.isArray(existing)) {
+        return NextResponse.json({ error: 'Reminder not found' }, { status: 404 });
+      }
+      const reminderDateObj = new Date(updates.reminderDate);
+      payload.reminderDate = reminderDateObj;
+      payload.schedule = buildReminderSchedule(
+        new Date(existing.createdAt as Date),
+        reminderDateObj
+      );
+    }
+
     const reminder = await Reminder.findOneAndUpdate(
       { _id: id, userId },
-      { $set: updates },
+      { $set: payload },
       { new: true }
     );
 

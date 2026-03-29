@@ -15,23 +15,25 @@ function getClient() {
 }
 
 /**
- * Generates a warm, personal nudge message from Gemini.
- * @param {string} note        - The user's original reminder note
- * @param {string} importance  - 'High' | 'Medium' | 'Low'
- * @param {number} daysAgo     - How many days ago the reminder was created
- * @returns {Promise<string>}  - The generated letter text
+ * @param {object} [ctx] - sequenceIndex, sequenceTotal, untilDeadline
  */
-export async function generateNudgeMessage(note, importance, daysAgo) {
+export async function generateNudgeMessage(note, importance, daysAgo, ctx) {
   const client = getClient();
-  const model = client.getGenerativeModel({ model: 'gemini-1.5-flash' });
+  const model = client.getGenerativeModel({ model: 'gemini-2.0-flash' });
+
+  const seq =
+    ctx && ctx.sequenceTotal > 1
+      ? `This is email ${ctx.sequenceIndex} of ${ctx.sequenceTotal} in this reminder series (leading up to their deadline). Time context: ${ctx.untilDeadline}.\n`
+      : '';
 
   const prompt =
+    `${seq}` +
     `The user wrote this note to their future self ${daysAgo} day${daysAgo !== 1 ? 's' : ''} ago: "${note}"\n` +
     `Importance level: ${importance}\n` +
     `Write a short, warm, motivating nudge message (max 3 sentences) reminding them about this.\n` +
-    `Be personal, not robotic. Reference the time that has passed. Do not use emojis excessively.`;
+    `Be personal, not robotic. Reference the time that has passed and where they are in their journey. Do not use emojis excessively.`;
 
-  const result   = await model.generateContent(prompt);
+  const result = await model.generateContent(prompt);
   const response = await result.response;
   return response.text();
 }
