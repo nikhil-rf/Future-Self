@@ -1,184 +1,190 @@
-'use client';
-import Link from 'next/link';
-import { useState } from 'react';
+"use client";
+import {
+  Navbar,
+  NavBody,
+  NavItems,
+  MobileNav,
+  NavbarLogo,
+  NavbarButton,
+  MobileNavHeader,
+  MobileNavToggle,
+  MobileNavMenu,
+} from "@/components/ui/resizable-navbar";
+import { useState } from "react";
 
-export default function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false);
+export function NavbarDemo() {
+  const navItems = [
+    {
+      name: "Features",
+      link: "#features",
+    },
+    {
+      name: "Pricing",
+      link: "#pricing",
+    },
+    {
+      name: "Contact",
+      link: "#contact",
+    },
+  ];
+
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <nav
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 50,
-        background: 'rgba(24, 23, 23, 0.88)',
-        backdropFilter: 'blur(18px)',
-        borderBottom: '1px solid #252323',
-      }}
-    >
-      <div
-        style={{
-          maxWidth: '1200px',
-          margin: '0 auto',
-          padding: '0 clamp(16px, 4vw, 32px)',
-          height: '64px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}
-      >
-        {/* Logo */}
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
-          <div
-            style={{
-              width: '32px',
-              height: '32px',
-              borderRadius: '8px',
-              background: 'linear-gradient(135deg, #4b2bee, #7c5af0)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#fff', fontVariationSettings: "'FILL' 1" }}>electric_bolt</span>
+    <div className="relative w-full">
+      <Navbar>
+        {/* Desktop Navigation */}
+        <NavBody>
+          <NavbarLogo />
+          <NavItems items={navItems} />
+          <div className="flex items-center gap-4">
+            <NavbarButton href="/login" as="a" variant="secondary">Login</NavbarButton>
+            <NavbarButton href="/register" as="a" variant="primary">Get Started</NavbarButton>
           </div>
-          <span style={{ fontSize: '17px', fontWeight: 700, color: '#f0eded', letterSpacing: '-0.3px' }}>
-            FutureSelf
-          </span>
-        </Link>
+        </NavBody>
 
-        {/* Desktop Nav Links */}
-        <div
-          style={{ display: 'flex', alignItems: 'center', gap: '4px' }}
-          className="hidden md:flex"
-        >
-          {[
-            { label: 'The Problem', href: '#problem' },
-            { label: 'How it works', href: '#how-it-works' },
-            { label: 'Features', href: '#features' },
-            { label: 'Stories', href: '#social-proof' },
-          ].map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              style={{
-                color: '#9c9898',
-                fontSize: '14px',
-                padding: '8px 14px',
-                borderRadius: '8px',
-                transition: 'color 0.2s, background 0.2s',
-                cursor: 'pointer',
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.color = '#f0eded';
-                (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.05)';
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.color = '#9c9898';
-                (e.currentTarget as HTMLElement).style.background = 'transparent';
-              }}
-            >
-              {link.label}
-            </a>
-          ))}
-        </div>
+        {/* Mobile Navigation */}
+        <MobileNav>
+          <MobileNavHeader>
+            <NavbarLogo />
+            <MobileNavToggle
+              isOpen={isMobileMenuOpen}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            />
+          </MobileNavHeader>
 
-        {/* CTA Buttons */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Link
-            href="/login"
-            style={{ color: '#9c9898', fontSize: '14px', fontWeight: 500, padding: '8px 14px', borderRadius: '8px', transition: 'color 0.2s', textDecoration: 'none' }}
-            onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = '#f0eded')}
-            onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = '#9c9898')}
+          <MobileNavMenu
+            isOpen={isMobileMenuOpen}
+            onClose={() => setIsMobileMenuOpen(false)}
           >
-            Login
-          </Link>
-          <Link href="/register">
-            <button className="btn-primary" style={{ padding: '9px 18px', fontSize: '14px' }}>
-              Get Started →
-            </button>
-          </Link>
-
-          {/* Mobile hamburger */}
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="mobile-nav"
-            style={{
-              background: 'transparent',
-              border: '1px solid #2c2a2a',
-              borderRadius: '8px',
-              color: '#9c9898',
-              cursor: 'pointer',
-              padding: '8px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-            aria-label="Toggle menu"
-          >
-            <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>
-              {menuOpen ? 'close' : 'menu'}
-            </span>
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile dropdown */}
-      {menuOpen && (
-        <div
-          className="mobile-nav"
-          style={{
-            background: '#111010',
-            borderTop: '1px solid #252323',
-            padding: '16px clamp(16px, 4vw, 32px)',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '4px',
-          }}
-        >
-          {[
-            { label: 'The Problem', href: '#problem' },
-            { label: 'How it works', href: '#how-it-works' },
-            { label: 'Features', href: '#features' },
-            { label: 'Stories', href: '#social-proof' },
-          ].map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={() => setMenuOpen(false)}
-              style={{
-                color: '#9c9898',
-                fontSize: '15px',
-                padding: '12px 16px',
-                borderRadius: '8px',
-                display: 'block',
-                transition: 'background 0.2s, color 0.2s',
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.background = 'rgba(75,43,238,0.08)';
-                (e.currentTarget as HTMLElement).style.color = '#f0eded';
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.background = 'transparent';
-                (e.currentTarget as HTMLElement).style.color = '#9c9898';
-              }}
-            >
-              {link.label}
-            </a>
-          ))}
-          <div style={{ height: '1px', background: '#252323', margin: '8px 0' }} />
-          <Link href="/login" style={{ color: '#9c9898', fontSize: '15px', padding: '12px 16px', borderRadius: '8px' }} onClick={() => setMenuOpen(false)}>
-            Login
-          </Link>
-          <Link href="/register" onClick={() => setMenuOpen(false)}>
-            <button className="btn-primary" style={{ width: '100%', justifyContent: 'center', marginTop: '4px' }}>
-              Get Started →
-            </button>
-          </Link>
-        </div>
-      )}
-    </nav>
+            {navItems.map((item, idx) => (
+              <a
+                key={`mobile-link-${idx}`}
+                href={item.link}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="relative text-neutral-600 dark:text-neutral-300"
+              >
+                <span className="block">{item.name}</span>
+              </a>
+            ))}
+            <div className="flex w-full flex-col gap-4">
+              <NavbarButton
+                onClick={() => setIsMobileMenuOpen(false)}
+                variant="primary"
+                className="w-full"
+              >
+                Login
+              </NavbarButton>
+              <NavbarButton
+                onClick={() => setIsMobileMenuOpen(false)}
+                variant="primary"
+                className="w-full"
+              >
+                Book a call
+              </NavbarButton>
+            </div>
+          </MobileNavMenu>
+        </MobileNav>
+      </Navbar>
+    </div>
   );
 }
+
+export default NavbarDemo;
+
+// const DummyContent = () => {
+//   return (
+//     <div className="container mx-auto p-8 pt-24">
+//       <h1 className="mb-4 text-center text-3xl font-bold">
+//         Check the navbar at the top of the container
+//       </h1>
+//       <p className="mb-10 text-center text-sm text-zinc-500">
+//         For demo purpose we have kept the position as{" "}
+//         <span className="font-medium">Sticky</span>. Keep in mind that this
+//         component is <span className="font-medium">fixed</span> and will not
+//         move when scrolling.
+//       </p>
+//       {/* <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
+//         {[
+//           {
+//             id: 1,
+//             title: "The",
+//             width: "md:col-span-1",
+//             height: "h-60",
+//             bg: "bg-neutral-100 dark:bg-neutral-800",
+//           },
+//           {
+//             id: 2,
+//             title: "First",
+//             width: "md:col-span-2",
+//             height: "h-60",
+//             bg: "bg-neutral-100 dark:bg-neutral-800",
+//           },
+//           {
+//             id: 3,
+//             title: "Rule",
+//             width: "md:col-span-1",
+//             height: "h-60",
+//             bg: "bg-neutral-100 dark:bg-neutral-800",
+//           },
+//           {
+//             id: 4,
+//             title: "Of",
+//             width: "md:col-span-3",
+//             height: "h-60",
+//             bg: "bg-neutral-100 dark:bg-neutral-800",
+//           },
+//           {
+//             id: 5,
+//             title: "F",
+//             width: "md:col-span-1",
+//             height: "h-60",
+//             bg: "bg-neutral-100 dark:bg-neutral-800",
+//           },
+//           {
+//             id: 6,
+//             title: "Club",
+//             width: "md:col-span-2",
+//             height: "h-60",
+//             bg: "bg-neutral-100 dark:bg-neutral-800",
+//           },
+//           {
+//             id: 7,
+//             title: "Is",
+//             width: "md:col-span-2",
+//             height: "h-60",
+//             bg: "bg-neutral-100 dark:bg-neutral-800",
+//           },
+//           {
+//             id: 8,
+//             title: "You",
+//             width: "md:col-span-1",
+//             height: "h-60",
+//             bg: "bg-neutral-100 dark:bg-neutral-800",
+//           },
+//           {
+//             id: 9,
+//             title: "Do NOT TALK about",
+//             width: "md:col-span-2",
+//             height: "h-60",
+//             bg: "bg-neutral-100 dark:bg-neutral-800",
+//           },
+//           {
+//             id: 10,
+//             title: "F Club",
+//             width: "md:col-span-1",
+//             height: "h-60",
+//             bg: "bg-neutral-100 dark:bg-neutral-800",
+//           },
+//         ].map((box) => (
+//           <div
+//             key={box.id}
+//             className={`${box.width} ${box.height} ${box.bg} flex items-center justify-center rounded-lg p-4 shadow-sm`}
+//           >
+//             <h2 className="text-xl font-medium">{box.title}</h2>
+//           </div>
+//         ))}
+//       </div> */}
+//     </div>
+//   );
+// };
