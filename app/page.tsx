@@ -55,7 +55,7 @@ export default function LandingPage() {
       <HeroSection />
 
       {/* ── Problem ── 
-      <section id="problem" style={{ padding: 'clamp(60px, 8vw, 100px) clamp(16px, 5vw, 48px)', borderTop: '1px solid #252323' }}>
+      <section id="problem" style={{ padding: 'clamp(60px, 8vw, 100px) clamp(16px, 5vw, 48px)', borderTop: '1px solid #252323'    }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '56px' }}>
             <p style={{ color: '#a78bfa', fontSize: '12px', fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase', margin: '0 0 12px' }}>The Problem</p>
