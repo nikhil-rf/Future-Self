@@ -42,7 +42,17 @@ export const authOptions: AuthOptions = {
       },
     }),
   ],
-  session: { strategy: 'jwt' },
+  session: {
+    strategy: 'jwt',
+    // Keep users signed in for 30 days.
+    maxAge: 30 * 24 * 60 * 60,
+    // Refresh the session expiry every 24 hours while active.
+    updateAge: 24 * 60 * 60,
+  },
+  jwt: {
+    // Align JWT expiry with session expiry.
+    maxAge: 30 * 24 * 60 * 60,
+  },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {

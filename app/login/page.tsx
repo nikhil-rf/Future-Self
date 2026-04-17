@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { signIn } from 'next-auth/react';
+import { getSession, signIn } from 'next-auth/react';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 
@@ -19,7 +19,16 @@ export default function LoginPage() {
         password: form.password,
         redirect: false,
       });
-      if (result?.error) throw new Error(result.error);
+      if (!result || result.error || !result.ok) {
+        throw new Error(result?.error || 'Login failed');
+      }
+
+      // Ensure NextAuth could actually create/read a session before treating login as successful.
+      const session = await getSession();
+      if (!session?.user) {
+        throw new Error('Authentication failed due to server configuration');
+      }
+
       toast.success('Welcome back!');
       router.push('/dashboard');
     } catch (err: unknown) {
