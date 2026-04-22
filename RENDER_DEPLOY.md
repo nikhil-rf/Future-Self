@@ -1,31 +1,31 @@
-# Deploy FutureSelf on Render
+# Deploy setup: Vercel + Render
 
-This repo now includes a root `render.yaml` blueprint that deploys:
-- `futureself-web` (Next.js app + API routes)
-- `futureself-worker` (background reminder worker)
+Frontend is deployed on Vercel.
+This repo's root `render.yaml` is for deploying only:
+- `futureself-worker` (background reminder worker) on Render
 
 ## 1) Push this repo to GitHub
 
 Render Blueprint deploys from a Git repository.
 
-## 2) Create services from Blueprint
+## 2) Create worker from Blueprint
 
 1. In Render, click **New +** -> **Blueprint**.
 2. Select this repository.
-3. Render will detect `render.yaml` and create both services.
+3. Render will detect `render.yaml` and create the worker service.
 
 ## 3) Set required environment variables
 
-### `futureself-web`
+### Vercel (frontend + Next.js API routes)
 - `MONGODB_URI`
-- `NEXTAUTH_URL` = your web service URL (for example `https://futureself-web.onrender.com`)
+- `NEXTAUTH_URL` = your Vercel URL (for example `https://your-app.vercel.app`)
 - `NEXTAUTH_SECRET` (or `AUTH_SECRET`)
 - `RESEND_API_KEY`
-- `GEMINI_API_KEY` (if used by web routes)
+- `GEMINI_API_KEY` (if used by API routes)
 
 ### `futureself-worker`
 - `MONGODB_URI`
-- `APP_BASE_URL` = your web service URL (same as `NEXTAUTH_URL`)
+- `APP_BASE_URL` = your Vercel URL (same value as `NEXTAUTH_URL`)
 - `RESEND_API_KEY`
 - `GEMINI_API_KEY`
 - `POLL_CRON` (optional, default `* * * * *`)
@@ -37,4 +37,4 @@ If login works locally but fails on deployment, the most common causes are:
 - Missing `NEXTAUTH_SECRET` / `AUTH_SECRET`
 - Wrong domain in `NEXTAUTH_URL`
 
-Make sure `NEXTAUTH_URL` exactly matches your Render web app public URL.
+Make sure `NEXTAUTH_URL` exactly matches your Vercel app public URL.
