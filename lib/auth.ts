@@ -73,6 +73,5 @@ export const authOptions: AuthOptions = {
     signIn: '/login',
     error:  '/login',
   },
-  // Support both naming conventions used across hosting providers.
-  secret: process.env.NEXTAUTH_SECRET || process.env.AUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
 };
