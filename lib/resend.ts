@@ -1,7 +1,12 @@
 import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const BASE_URL = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+const BASE_URL =
+  process.env.APP_BASE_URL ||
+  process.env.NEXTAUTH_URL ||
+  (process.env.RENDER_EXTERNAL_URL
+    ? `https://${process.env.RENDER_EXTERNAL_URL}`
+    : 'http://localhost:3000');
 
 interface SendReminderEmailParams {
   to: string;

@@ -1,0 +1,39 @@
+services:
+  - type: web
+    name: futureself-web
+    runtime: node
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: NEXTAUTH_URL
+        sync: false
+      - key: NEXTAUTH_SECRET
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+    autoDeploy: true
+
+  - type: worker
+    name: futureself-worker
+    runtime: node
+    rootDir: worker
+    buildCommand: npm install
+    startCommand: node src/index.js
+    envVars:
+      - key: MONGODB_URI
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: APP_BASE_URL
+        sync: false
+      - key: POLL_CRON
+        value: "* * * * *"
+    autoDeploy: true
